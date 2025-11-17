@@ -1,0 +1,74 @@
+/* When to use which?
+✔ Use rem for:
+
+Font sizes
+
+Spacing (padding, margin, gap)
+
+Consistent scaling across the whole app
+
+✔ Use em for:
+
+Icons or elements that must scale with the font-size of their container
+Example: button padding that grows with text size.
+
+✔ Use px for:
+
+Borders (1px)
+
+Hairlines
+
+Shadows
+
+Very precise UI details */
+@import "tailwindcss";
+@font-face {
+  font-family: iransans;
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url("./assets/fonts/iranyekanx/iransansxv.woff") format("woff");
+}
+@font-face {
+  font-family: 'vazirmatnrd';
+  src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Round-Dots/fonts/webfonts/Vazirmatn-RD[wght].woff2') format('woff2 supports variations'),
+       url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Round-Dots/fonts/webfonts/Vazirmatn-RD[wght].woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@theme {
+  --font-iransans: iransans;
+  --font-vazirmatn: vazirmatnrd;
+  --color-red: #C2123C;
+  --color-red-foreground: #FFFFFF;
+  --color-pink-linear: #F23B51;
+  --color-pink-linear-foreground: #FFFFFF;
+  --color-pink-linear-hover: #F23B51;
+  --color-pink-linear-hover-foreground: #FFFFFF;
+  --color-pink:#FFE9EE;
+  --color-pink-foreground: #000000;
+  --color-white:#FFFFFF;
+  --color-white-foreground: #000000;
+
+  --radius-lg: calc(var(--radius) * 3) ;/*24px*/
+  --radius-md: calc(var(--radius) * 2) ;/*16px*/
+  --radius-sm: calc(var(--radius));
+  --radius-xs: calc(var(--radius) / 2);
+}
+
+:root{
+    --radius: 0.5rem;/*8px*/;
+    --base-font: "iransans";
+    --fallback-font: "vazirmatnrd";
+}
+
+body {
+  margin: 0;
+  font-family: var(--base-font), var(--fallback-font);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
