@@ -1,5 +1,13 @@
 import '../src/index.css';
+import '../src/assets/icons/planet-icon-v1.0/style.scss'
+
 import type { Preview } from '@storybook/react-vite';
+
+// Set RTL direction on document root
+if (typeof document !== 'undefined') {
+  document.documentElement.dir = 'rtl';
+  document.documentElement.lang = 'fa';
+}
 
 const preview: Preview = {
   parameters: {

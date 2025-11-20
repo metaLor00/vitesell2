@@ -6,15 +6,12 @@ import React from "react";
 const buttonVariants = cva(
   // "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
 
-  "inline-flex  items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-normal", 
+  "inline-flex  items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-normal hovor:opacity-50 pointer:cursor-pointer disabled:pointer-events-none disabled:opacity-50", 
   {
   variants: {
     variant: {
-      "default": "bg-pink-linear text-pink-linear-foreground",
-      "pink": "bg-pink",
-      "white": "bg-white",
-      "light-pink": "bg-pink-light",
-
+      "default": "bg-primary text-primary-foreground hover:bg-primary-hover hover:opacity-50",
+      "white": "bg-white text-white-foreground hover:bg-white-hover hover:opacity-50",
     },
     size: {
        default: "h-[38px] px-4 py-2",
@@ -38,7 +35,6 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 const Button = ({ className, variant='default', ref, size='default', onClick, asChild = false, ...props }: ButtonProps) => {
 
-
   const Comp = asChild ? Slot : "button";
   ///cn = “class names combiner”
   return (
@@ -48,7 +44,6 @@ const Button = ({ className, variant='default', ref, size='default', onClick, as
       ref={ref}
       {...props}
     />
-
 
   );
 };

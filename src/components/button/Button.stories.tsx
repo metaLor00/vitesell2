@@ -9,7 +9,7 @@ const meta: Meta<typeof Button> = {
 	argTypes: {
 		variant: {
 			control: { type: "select" },
-			options: ["default", "pink", "white", "light-pink"],
+			options: ["default" ,"white"],
 		},
 		size: {
 			control: { type: "select" },
@@ -41,10 +41,11 @@ export const Primary: Story = {
 	},
 };
 
-export const LightPink: Story = {
+export const White: Story = {
 	args: {
-		children: "Light Pink",
-		variant: "light-pink",
+		children: "لینک",
+        variant: "white",
+        size: "default",
 	},
 };
 
