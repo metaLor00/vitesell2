@@ -41,7 +41,7 @@ const Input =(
     const isRTL = dir === "rtl";
 
     const inputVariants = cva(
-      "w-full bg-gray-light border-none outline-none transition-colors duration-200 placeholder:text-gray focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-gray-light disabled:text-gray-4 disabled:cursor-not-allowed",
+      "w-full bg-gray-light border-none outline-none transition-colors duration-200 placeholder:text-gray-bd placeholder:text-xs focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-gray-light disabled:text-gray-4 disabled:cursor-not-allowed",
       {
       variants: {
         variant: {

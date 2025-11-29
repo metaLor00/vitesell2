@@ -1,4 +1,5 @@
 import '../src/index.css';
+import '../src/App.scss';
 import '../src/assets/icons/planet-icon-v1.0/style.scss'
 
 import type { Preview } from '@storybook/react-vite';
