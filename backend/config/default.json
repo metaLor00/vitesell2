@@ -1,0 +1,12 @@
+{
+  "jwtPrivateKey": "",
+  "app": {
+    "port": 3000
+  },
+  "db": {
+    "uri": ""
+  },
+  "log": {
+    "level": "debug"
+  } 
+}

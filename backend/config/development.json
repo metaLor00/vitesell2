@@ -1,0 +1,11 @@
+{
+    "app":{
+        "port":5000
+    },
+    "email":{
+        "host":"dev-smtp.gmail.com"
+    },
+    "log":{
+        "level":"debug"
+    }
+}

@@ -1,0 +1,17 @@
+{
+  "app": {
+    "port": 8080
+  },
+    "email": {
+        "host": "prod-smtp.gmail.com"
+    },
+  "db": {
+    "uri": "mongodb+srv://produser:prodpass@cluster.mongodb.net/vitesell?retryWrites=true&w=majority"
+  },
+  "jwt": {
+    "secret": "super-secure-prod-secret"
+  },
+  "log": {
+    "level": "info"
+  }
+}
