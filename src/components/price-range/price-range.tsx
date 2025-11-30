@@ -68,13 +68,13 @@ const PriceRange = ({ minLabel = "از",
   const handleInputCommit = useCallback((type: "min" | "max", value: string) => {
     const parsed = parsePrice(value)
     if (type === "min") {
-      const newMin = Math.min(parsed, maxValue - step)
+      const newMin =parsed<initialMin?initialMin: Math.min(parsed, maxValue - step)
       startTransition(() => {
         setMinValue(newMin)
         setMinInput(formatPrice(newMin))
       })
     } else {
-      const newMax = Math.max(parsed, minValue + step)
+      const newMax =parsed > initialMax?initialMax: Math.max(parsed, minValue + step)
       startTransition(() => {
         setMaxValue(newMax)
         setMaxInput(formatPrice(newMax))
