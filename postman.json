@@ -1,0 +1,79 @@
+{
+  "info": {
+    "name": "Auth API",
+    "_postman_id": "a5c8f9e4-2233-4411-9921-auth-flow",
+    "description": "Authentication routes for mobile-based login (OTP + Password).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Initiate Auth",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"mobile\":\"09120000000\",\"method\":\"otp\"}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/v1/auth/initiate",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "v1", "auth", "initiate"]
+        }
+      }
+    },
+    {
+      "name": "Verify OTP",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"mobile\":\"09120000000\",\"code\":\"123456\"}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/v1/auth/verify-otp",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "v1", "auth", "verify-otp"]
+        }
+      }
+    },
+    {
+      "name": "Password Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"mobile\":\"09120000000\",\"password\":\"yourpassword\"}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/v1/auth/password",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "v1", "auth", "password"]
+        }
+      }
+    }
+  ]
+}

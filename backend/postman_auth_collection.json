@@ -1,0 +1,193 @@
+{
+  "info": {
+    "name": "Vitesell Auth - Postman Collection",
+    "_postman_id": "vitesell-auth-collection",
+    "description": "Postman collection for authentication flows: initiate, verify OTP, password login, set password, change password.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "mobile", "value": "09120000000" },
+    { "key": "otp", "value": "123456" },
+    { "key": "password", "value": "password123" },
+    { "key": "token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Initiate - OTP",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"mobile\": \"{{mobile}}\",\n  \"method\": \"otp\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/auth/initiate",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "auth", "initiate"]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Initiate OTP - status 200', function() { pm.response.to.have.status(200); });",
+              "// You should receive message: 'OTP sent' to confirm server accepted request"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Initiate - Password (show password card)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"mobile\": \"{{mobile}}\",\n  \"method\": \"password\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/auth/initiate",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "auth", "initiate"]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Initiate Password - status 200', function() { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Verify OTP",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"mobile\": \"{{mobile}}\",\n  \"code\": \"{{otp}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/auth/verify-otp",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "auth", "verify-otp"]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Verify OTP - status 200', function() { pm.response.to.have.status(200); });",
+              "var json = pm.response.json();",
+              "if (json && json.token) { pm.environment.set('token', json.token); }",
+              "// Also set token if in header x-auth-token",
+              "if (!pm.environment.get('token') && pm.response.headers.has('x-auth-token')) { pm.environment.set('token', pm.response.headers.get('x-auth-token')); }"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Password Login",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"mobile\": \"{{mobile}}\",\n  \"password\": \"{{password}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/auth/password",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "auth", "password"]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Password login - status 200', function() { pm.response.to.have.status(200); });",
+              "var json = pm.response.json();",
+              "if (json && json.token) { pm.environment.set('token', json.token); }",
+              "if (!pm.environment.get('token') && pm.response.headers.has('x-auth-token')) { pm.environment.set('token', pm.response.headers.get('x-auth-token')); }"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Set Password (Authenticated)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "x-auth-token", "value": "{{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"password\": \"{{password}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/users/set-password",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "users", "set-password"]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Set password - status 200 or 400 if not needed', function() { pm.response.to.be.ok; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Change Password (Authenticated)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "x-auth-token", "value": "{{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"currentPassword\": \"{{password}}\",\n  \"newPassword\": \"{{password}}new\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/users/change-password",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "users", "change-password"]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Change password - status 200', function() { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

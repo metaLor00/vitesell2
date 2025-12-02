@@ -61,9 +61,7 @@ rentalRouter.post("/", validate(rentalValidationSchemas), async (req, res) => {
 
   // ---------------------------
   // ✅ Use Session (Transaction)
-  //stop all mongod proccessand taskkill /F /IM mongod.exe
- ///then run this in powershell admin: mongod --dbpath "C:\Program Files\MongoDB\Server\8.0\data" --replSet rs0
-  /// then in mongoshell in compass run: rs.initiate()
+  // For local MongoDB setup and replica set instructions see README-mongodb.md
   // ---------------------------
   const session = await mongoose.startSession();
   session.startTransaction();

@@ -1,45 +1,48 @@
 import express from "express";
-import { User } from "../models/user.js";
-import validate from "../utils/validate.js";
-import config from "config";
 import Joi from "joi";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import _ from "lodash";
+import validate from "../utils/validate.js";
+import {
+  initiateAuth,
+  verifyOtpController,
+  passwordLoginController,
+} from "../controllers/auth.controller.js";
+
 const authRouter = express.Router();
-const authValidationSchema = {
+
+// Validation schemas
+const initiateSchema = {
   body: Joi.object({
-    email: Joi.string().email().required().messages({
-      "string.base": "Email must be a string",
-      "string.email": "Email must be a valid email",
-      "string.empty": "Email cannot be empty",
-      "any.required": "Email is required",
+    mobile: Joi.string().min(3).required().messages({
+      "string.base": "Mobile must be a string",
+      "string.empty": "Mobile cannot be empty",
+      "string.min": "Mobile must be at least 3 characters long",
+      "any.required": "Mobile is required",
     }),
-    password: Joi.string().min(8).required().messages({
-      "string.base": "Password must be a string",
-      "string.empty": "Password cannot be empty",
-      "string.min": "Password must be at least 8 characters long",
-      "any.required": "Password is required",
-    }),
+    method: Joi.string().valid("otp", "password").default("password"),
   }),
 };
-authRouter.post("/", validate(authValidationSchema), async (req, res) => {
-  const validatedBody = req.validatedBody;
 
-  let user = await User.findOne({ email: validatedBody.email });
-  if (!user) {
-    res.status(400).json({ message: "invalid email or password" });
-  }
-  const isValidPassword = await bcrypt.compare(
-    validatedBody.password,
-    user.password
-  );
-  if (!isValidPassword) {
-    res.status(400).json({ message: "invalid email or password" });
-  }
+const verifyOtpSchema = {
+  body: Joi.object({
+    mobile: Joi.string().min(3).required(),
+    code: Joi.string().length(6).required(),
+  }),
+};
 
-  const token = user.generateAuthToken();
-  res.status(200).json({ token });
-});
+const passwordSchema = {
+  body: Joi.object({
+    mobile: Joi.string().min(3).required(),
+    password: Joi.string().min(8).required(),
+  }),
+};
+
+// Initiate login flow: choose OTP or password
+authRouter.post("/initiate", validate(initiateSchema), initiateAuth);
+
+// Verify OTP
+authRouter.post("/verify-otp", validate(verifyOtpSchema), verifyOtpController);
+
+// Password login
+authRouter.post("/password", validate(passwordSchema), passwordLoginController);
 
 export default authRouter;

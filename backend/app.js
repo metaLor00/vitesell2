@@ -7,7 +7,7 @@ import initConfig from "./src/startup/init-config.js";
 import winston from "winston";
 ///This is an instance of an Express application. It's created by calling express(), and it's the main object through which you define routes, middleware, and other configurations.
 const app = express();
-const port = process.env.PORT || 3000;
+const port =  process.env.PORT || 3000;
 
 initLogger(app);
 registerRoutes(app);

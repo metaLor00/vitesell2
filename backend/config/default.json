@@ -1,10 +1,10 @@
 {
   "jwtPrivateKey": "",
   "app": {
-    "port": 3000
+    "port": 5000
   },
   "db": {
-    "uri": ""
+    "uri": "mongodb://localhost:27017/vitesell"
   },
   "log": {
     "level": "debug"

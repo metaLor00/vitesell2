@@ -30,12 +30,12 @@ const genreValidationSchemas = {
   // query: Joi.object({
   //   ref: Joi.string().optional(),
   // }),
-  params: Joi.object({
-        id: Joi.objectId().required().messages({
-      'string.pattern.name': 'Invalid ID', // joi-objectid uses pattern internally
-      'any.required': 'ID is required',
-    }),
-  }),
+  // params: Joi.object({
+  //       id: Joi.objectId().required().messages({
+  //     'string.pattern.name': 'Invalid ID', // joi-objectid uses pattern internally
+  //     'any.required': 'ID is required',
+  //   }),
+  // }),
 };
 
 export { Genre, genreValidationSchemas };
