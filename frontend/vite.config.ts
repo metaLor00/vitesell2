@@ -48,7 +48,18 @@ export default defineConfig({
       "@libs": path.resolve(__dirname, "src/libs"),
       "@utils": path.resolve(__dirname, "src/utils"),
       "@services": path.resolve(__dirname,"src/services"),
-      "@hooks": path.resolve(__dirname,"src/hooks")
+      "@hooks": path.resolve(__dirname,"src/hooks"),
+      "@api": path.resolve(__dirname,"src/api"),
+      "@routes": path.resolve(__dirname,"src/api/routes"),
+    }
+  },
+    server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000', // backend dev server
+        changeOrigin: true,
+        secure: false
+      }
     }
   }
 });

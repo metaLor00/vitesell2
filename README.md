@@ -71,3 +71,15 @@ export default defineConfig([
   },
 ])
 ```
+#run the app
+```bash
+cd ./backend/
+sudo systemctl start mongod
+export JWT_PRIVATE_KEY=123456
+export DEBUG_OTP=true
+pnpm start
+```
+```bash
+cd ./frontend/
+npm run dev
+```

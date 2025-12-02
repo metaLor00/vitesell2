@@ -67,7 +67,6 @@ This repository uses a **monorepo layout** consisting of two separate applicatio
 
 ### **3.1 Do not introduce cross-app coupling**
 
-- Frontend must not import backend code.
 - Backend must not import frontend code.
 - Shared logic belongs in a future `packages/` folder (only if you choose to create one).
 

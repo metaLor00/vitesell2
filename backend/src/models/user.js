@@ -18,7 +18,7 @@ export const userSchema = new Schema({
     required: true,
   },
   roles: {
-    type: [String],
+    type: String,
     enum: ["user", "admin"],
     default: ["user"],
   },
@@ -50,6 +50,7 @@ const userValidationSchemas = {
       "string.min": "Password must be at least 8 characters long",
       "any.required": "Password is required",
     }),
+    roles: Joi.array().items(Joi.string().valid("user", "admin")).default(["user"]),
   }),
 };
 
