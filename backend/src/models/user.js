@@ -18,7 +18,7 @@ export const userSchema = new Schema({
     required: true,
   },
   roles: {
-    type: String,
+    type: [String],
     enum: ["user", "admin"],
     default: ["user"],
   },
@@ -38,11 +38,12 @@ const User = model("User", userSchema);
 
 const userValidationSchemas = {
   body: Joi.object({
-    mobile: Joi.string().min(3).required().messages({
+    mobile: Joi.string().min(3).required().regex(/^09\d{9}$/).messages({
       "string.base": "Mobile must be a string",
       "string.empty": "Mobile cannot be empty",
       "string.min": "Mobile must be at least 3 characters long",
       "any.required": "Mobile is required",
+      "string.regex.base": "Mobile must be a valid mobile number",
     }),
     password: Joi.string().min(8).max(255).required().messages({
       "string.base": "Password must be a string",
@@ -50,7 +51,9 @@ const userValidationSchemas = {
       "string.min": "Password must be at least 8 characters long",
       "any.required": "Password is required",
     }),
-    roles: Joi.array().items(Joi.string().valid("user", "admin")).default(["user"]),
+    roles: Joi.array()
+      .items(Joi.string().valid("user", "admin"))
+      .default(["user"]),
   }),
 };
 

@@ -1,0 +1,12 @@
+{
+  "name": "vitesell",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Vitesell - monorepo with frontend and backend",
+  "scripts": {
+    "dev": "pnpm --filter=@vitesell/frontend dev",
+    "dev:backend": "pnpm --filter=@vitesell/backend start",
+    "dev:all": "pnpm -r dev",
+    "build": "pnpm --filter=@vitesell/frontend build"
+  }
+}

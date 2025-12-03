@@ -13,6 +13,7 @@ import img3 from '@assets/images/image 35.png';
 import Product from './components/product/product';
 import PriceRange from './components/price-range/price-range';
 import AuthCard from './components/auth-card/auth-card';
+import { Theme } from "@radix-ui/themes"; 
 const data = [
   {
     title: 'مد و پوشاک',
@@ -45,7 +46,8 @@ function App() {
   const [feedback, setFeedback] = useState('');
 
   return (
-    <main className="p-8">
+    <Theme>
+          <main className="p-8">
       <SectionHeader title="سوالات متداول" icon="i-user"></SectionHeader>
       <div className="flex flex-col items-center justify-center h-screen">
         <Button>
@@ -110,6 +112,8 @@ function App() {
         </form>
       </div>
     </main>
+       </Theme>
+
   );
 }
 

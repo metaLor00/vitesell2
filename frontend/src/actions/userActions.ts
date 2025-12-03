@@ -1,28 +1,48 @@
-"use server";
+'use server';
 
-import { createServerAction } from "./createServerAction";
+import { createServerAction } from './createServerAction';
+import { apiFetch } from '@api/http-client';
+import { adminRoutes } from '@api/routes/users';
+import onError from '@utils/onError';
+import validate from '@utils/validation';
 
-interface CreateUserInput {
-mobile: string;
-roles?: [string];
-password: string;
-}
+type CreateUserResult = {
+  _id: string;
+  mobile: string;
+  roles: string[];
+};
 
-export const createUser = createServerAction<CreateUserInput, { success: boolean }>(
-  async (data) => {
-    // simulate DB logic
-    console.log("Creating user with data:", data);
-    return { success: true };
+
+const schema = {
+  mobile: { required: true, pattern: /^09\\d{9}$/, message: 'Invalid mobile' },
+  password: { min: 8 },
+  roles: { required: true },
+};
+export const createUser = createServerAction<FormData, CreateUserResult>(
+  async (formData: FormData) => {
+    const body: {
+      mobile: string;
+      roles?: string[];
+      password?: string;
+    } = {
+      mobile: formData.get('mobile') as string,
+      roles: (formData.getAll('roles') as string[]) || [],
+      password: formData.get('password') as string,
+    };
+
+    const result = await apiFetch<CreateUserResult>(adminRoutes.createUser, {
+      method: 'POST',
+      body: JSON.stringify(body),
+    });
+    return result;
   },
   {
     validate(data) {
-        if (!data.mobile || !data.roles || !data.password) {
-            throw new Error("All fields are required");
-        }   
+      validate(data, schema);
     },
     onError(error) {
-      console.error("Server Action Error:", error);
-      throw new Error("Unable to create user");
-    }
-  }
+      const normalized = onError(error as any);
+      return normalized;
+    },
+  },
 );

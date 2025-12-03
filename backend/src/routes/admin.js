@@ -15,8 +15,6 @@ function adminOnly(req, res, next) {
   return res.status(403).json({ message: "Forbidden" });
 }
 
-
-
 adminRouter.post(
   "/create-user",
   authMiddleware,
@@ -26,12 +24,27 @@ adminRouter.post(
     const { mobile, password, roles } = req.validatedBody;
     try {
       const user = await createUserAdmin({ mobile, password, roles });
-      return res.status(201).json({ _id: user._id, mobile: user.mobile, role: user.roles });
+      return res
+        .status(201)
+        .json({ _id: user._id, mobile: user.mobile, roles: user.roles });
     } catch (err) {
       winston.warn("admin.create-user error: " + (err.message || err));
-      if (err.code === "EEXIST" || err.code === 11000)
-        return res.status(409).json({ message: "Mobile already exists" });
-      return res.status(500).json({ message: "Server error" });
+
+      // Handle duplicate key error (mobile already exists)
+      if (err.code === "EEXIST" || err.code === 11000) {
+        return res.status(409).json({
+          status: "error",
+          message: "Mobile already exists",
+          errors: { mobile: ["This mobile number is already registered"] },
+        });
+      }
+
+      // Generic server error
+      return res.status(500).json({
+        status: "error",
+        message: "Server error",
+        errors: { server: ["Failed to create user"] },
+      });
     }
   }
 );

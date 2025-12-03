@@ -5,3 +5,8 @@ createUser:"api/v1/users",
 updateUser:"api/v1/users/:id",
 deleteUser:"api/v1/users/:id",
 }
+export const adminRoutes = {
+createUser:"api/v1/admin/create-user",
+updateUser:"api/v1/admin/users/:id",
+deleteUser:"api/v1/admin/users/:id",
+}

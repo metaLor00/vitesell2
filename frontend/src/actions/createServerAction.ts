@@ -4,7 +4,7 @@ type ActionHandler<TInput, TOutput> = (input: TInput) => Promise<TOutput>;
 
 interface ServerActionOptions<TInput> {
   validate?: (input: TInput) => void | Promise<void>;
-  onError?: (error: unknown) => never;
+  onError?: (error: unknown) => any;
 }
 
 /**

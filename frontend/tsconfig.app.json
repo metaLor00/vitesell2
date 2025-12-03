@@ -17,6 +17,7 @@
       "@hooks/*": ["src/hooks/*"],
       "@api/*": ["src/api/*"],
       "@routes/*": ["src/api/routes/*"],
+      "@backend/*": ["../backend/src/*"]
     },
 
     /* Bundler mode */

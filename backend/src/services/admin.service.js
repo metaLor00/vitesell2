@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import { User } from "../models/user.js";
 import winston from "winston";
 
-export async function createUserAdmin({ mobile, password , role }) {
+export async function createUserAdmin({ mobile, password, roles }) {
   // Check existence
   let user = await User.findOne({ mobile });
   if (user) {
@@ -12,7 +12,7 @@ export async function createUserAdmin({ mobile, password , role }) {
   }
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
-  user = new User({ mobile,role, password: hash, needsPassword: false });
+  user = new User({ mobile, roles, password: hash, needsPassword: false });
   try {
     await user.save();
   } catch (err) {

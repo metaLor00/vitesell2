@@ -1,12 +1,12 @@
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../libs/utils";
-import React from "react";
-
+import { useFormStatus } from "react-dom";
+import { Spinner } from "@radix-ui/themes";
 const buttonVariants = cva(
   // "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
 
-  "px-4 py-2 cursor-pointer flex  items-center justify-center gap-2 !leading-none whitespace-nowrap rounded-full text-sm font-normal hovor:opacity-50 pointer:cursor-pointer disabled:pointer-events-none disabled:opacity-50", 
+  "w-full px-4 py-2 cursor-pointer flex  items-center justify-center gap-2 !leading-none whitespace-nowrap rounded-full text-sm font-normal hovor:opacity-50 pointer:cursor-pointer disabled:pointer-events-none disabled:opacity-50", 
   {
   variants: {
         size: {
@@ -37,8 +37,8 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 const Button = ({ className, variant='default', ref, size='default', onClick, asChild = false, ...props }: ButtonProps) => {
-
   const Comp = asChild ? Slot : "button";
+   const { pending } = useFormStatus();
   ///cn = “class names combiner”
   return (
     <Comp
@@ -46,7 +46,9 @@ const Button = ({ className, variant='default', ref, size='default', onClick, as
       className={cn(buttonVariants({ variant, size, className }))}
       ref={ref}
       {...props}
-    />
+    >
+      {pending ? <Spinner size="2" />: props.children}
+    </Comp>
 
   );
 };

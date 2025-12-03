@@ -6,7 +6,10 @@ export function useUsers() {
     queryKey: ['users'],
     queryFn: fetchUsers,
     // Disable automatic polling by default (set to a number if you need polling).
-    refetchInterval: false,
+    refetchInterval: 20000,
+    refetchIntervalInBackground: true,
+    refetchOnMount: true,
+    refetchOnReconnect: true,
     // Don't refetch on window focus to avoid unexpected reloads during dev/UX
     refetchOnWindowFocus: false,
     // Cache for 5 minutes to avoid refetching on mount frequently

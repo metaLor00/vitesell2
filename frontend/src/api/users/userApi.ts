@@ -1,6 +1,6 @@
 import onError from '@utils/onError';
 import { userRoutes } from '@routes/users';
-import { get, post } from '../client';
+import { get, post } from '../http-client';
 
 export type User = {
   _id: string;
